@@ -53,16 +53,15 @@ model Galeri {
 }
 
 model Infografis {
-  id          Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   title       String
-  type        String   // 'populasi', 'apbdes', 'idm', etc.
-  data        Json     // Store chart/stats data as JSON
-  year        Int
-  published   Boolean  @default(true)
+  type        String
+  data        String
+  description String  @default("")
+  year        Int     @default(2026)  // ← TAMBAH DEFAULT VALUE INI
+  published   Boolean @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
-  @@map("infografis")
 }
 
 model User {
