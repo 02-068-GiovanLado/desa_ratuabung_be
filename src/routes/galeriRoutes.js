@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const galeriController = require('../controllers/galeriController');
 
+// Routes
 router.get('/', galeriController.getAll);
 router.get('/:id', galeriController.getById);
 router.post('/', galeriController.create);
