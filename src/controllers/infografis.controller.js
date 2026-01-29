@@ -22,16 +22,23 @@ exports.getInfografisByType = async (req, res, next) => {
   try {
     const { type } = req.params;
     
+    // ✅ KONVERSI KE LOWERCASE SAAT QUERY
     const infografis = await prisma.infografis.findMany({
       where: {
-        type: type
+        type: type.toLowerCase()
       },
       orderBy: { createdAt: 'desc' }
     });
 
+    // ✅ PARSE DATA DARI STRING KE OBJECT
+    const processedData = infografis.map(item => ({
+      ...item,
+      data: typeof item.data === 'string' ? JSON.parse(item.data) : item.data
+    }));
+
     res.json({
       success: true,
-      data: infografis || []
+      data: processedData || []
     });
   } catch (error) {
     console.error('❌ getInfografisByType Error:', error);
@@ -63,7 +70,8 @@ exports.createInfografis = async (req, res, next) => {
     const infografis = await prisma.infografis.create({
       data: {
         title: title.trim(),
-        type: type.trim(),
+        // ✅ KONVERSI KE LOWERCASE SAAT CREATE
+        type: type.trim().toLowerCase(),
         description: description ? description.trim() : '',
         data: dataString,
         year: year ? parseInt(year) : new Date().getFullYear(),
@@ -128,7 +136,8 @@ exports.updateInfografis = async (req, res, next) => {
     // Build update data
     const updateData = {};
     if (title) updateData.title = title.trim();
-    if (type) updateData.type = type.trim();
+    // ✅ KONVERSI KE LOWERCASE SAAT UPDATE
+    if (type) updateData.type = type.trim().toLowerCase();
     if (description !== undefined) updateData.description = description ? description.trim() : '';
     if (year) updateData.year = parseInt(year);
     if (data) {
