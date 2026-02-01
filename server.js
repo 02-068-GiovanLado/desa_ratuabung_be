@@ -50,6 +50,7 @@ const beritaRoutes = require('./src/routes/berita.routes');
 const productRoutes = require('./src/routes/product.routes');
 const galeriRoutes = require('./src/routes/galeriRoutes');
 const infografisRoutes = require('./src/routes/infografis.routes');
+const adminRoutes = require('./src/routes/adminRoutes');
 
 // API Routes
 app.use('/api/auth', authRoutes);
@@ -57,6 +58,7 @@ app.use('/api/berita', beritaRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/galeri', galeriRoutes);
 app.use('/api/infografis', infografisRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Error Handler
 app.use((err, req, res, next) => {
